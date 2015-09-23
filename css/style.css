@@ -1,0 +1,224 @@
+body {
+  font-family: "Raleway", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  min-width: 800px;
+  position: relative;
+  line-height: 1.42857;
+  -webkit-font-smoothing: antialised;
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  position: relative;
+  display: none;
+  opacity: 0;
+  position: fixed;
+  right: -100%;
+  z-index: 0;
+}
+
+.active {
+  opacity: 1;
+  right: 0;
+  display: table;
+  z-index: 1;
+}
+
+h2 {
+  font-weight: normal;
+  margin: 0;
+  font-size: inherit;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#main, #menu {
+  background-image: url("../img/main-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.info-wrap {
+  margin: 0 auto;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#main {
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+#main .title {
+  text-align: center;
+  background-color: rgba(14, 37, 70, 0.3);
+  display: inline-block;
+  padding: 7% 3%;
+  width: 87%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  color: #f4e8c7;
+  text-transform: uppercase;
+  line-height: 150%;
+  font-size: 9vh;
+}
+
+#main .title h1 {
+  margin: 0;
+}
+
+#main .title .symbol {
+  color: #f20526;
+  margin-top: 5%;
+}
+
+#menu {
+  display: table;
+  width: 100%;
+}
+
+#menu .nav {
+  opacity: 0;
+}
+
+#menu .nav li {
+  width: 43%;
+  height: 43%;
+  background-size: cover;
+  background-position: center;
+  margin: 1px;
+  position: absolute;
+  cursor: pointer;
+}
+
+#menu .nav li .title-nav-wrap {
+  display: block;
+  color: #f4e8c7;
+  font-size: 2.6vw;
+  line-height: 3.4vw;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 100%;
+}
+
+#menu .nav li .title-nav-wrap .category {
+  width: 51%;
+  min-height: 42%;
+  display: inline-block;
+  padding: 3% 2% 0;
+  box-sizing: border-box;
+}
+
+#menu .nav li .title-nav-wrap .category h2 {
+  margin-bottom: 5%;
+}
+
+#menu .nav li .title-nav-wrap .category .description {
+  text-align: left;
+  font-size: 5.5vh;
+  line-height: 6.3vh;
+  margin: 0;
+  text-transform: none;
+  display: none;
+}
+
+#menu .nav li .title-nav-wrap .category .description .author {
+  display: block;
+  text-align: right;
+}
+
+#menu .nav .history {
+  background-image: url("../img/menu-history-bg.jpg");
+  top: 7%;
+  left: 7%;
+}
+
+#menu .nav .history .category {
+  background-color: rgba(22, 38, 60, 0.3);
+}
+
+#menu .nav .crimeans {
+  background-image: url("../img/menu-crimeans-bg.jpg");
+  top: 7%;
+  right: 7%;
+}
+
+#menu .nav .crimeans .category {
+  background-color: rgba(12, 12, 11, 0.28);
+}
+
+#menu .nav .heroes {
+  background-image: url("../img/menu-heroes-bg.jpg");
+  left: 7%;
+  bottom: 7%;
+}
+
+#menu .nav .heroes h2 {
+  margin-bottom: 3% !important;
+}
+
+#menu .nav .heroes .category {
+  background-color: rgba(12, 12, 11, 0.28);
+}
+
+#menu .nav .nature {
+  background-image: url("../img/menu-nature-bg.jpg");
+  right: 7%;
+  bottom: 7%;
+}
+
+#menu .nav .nature .category {
+  background-color: rgba(22, 38, 60, 0.3);
+}
+
+#menu .nav .zoom {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: table;
+}
+
+#menu .nav .zoom .title-nav-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#menu .nav .zoom h2 {
+  font-size: 12.6vh;
+  line-height: 3.4vw;
+}
+
+#menu .nav .zoom .category {
+  width: 83% !important;
+  height: 83%;
+  text-align: center;
+  font-size: 5.6vw;
+  padding: 5% 2% !important;
+}
+
+#menu .nav .zoom-history {
+  top: 0;
+  left: 0;
+}
+
+#menu .nav .zoom-crimeans {
+  top: 0;
+  right: 0;
+}
+
+#menu .nav .zoom-heroes {
+  left: 0;
+  bottom: 0;
+}
+
+#menu .nav .zoom-nature {
+  right: 0;
+  bottom: 0;
+}
