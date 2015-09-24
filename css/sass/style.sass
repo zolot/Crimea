@@ -10,6 +10,10 @@ body
 	-webkit-font-smoothing: antialised
 	margin: 0
 	padding: 0
+	background-image: url("../img/main-bg.jpg")
+	background-size: cover
+	background-position: center
+	background-attachment: fixed
 section
 	position: relative
 	display: none
@@ -31,9 +35,6 @@ ul
 	margin: 0
 	padding: 0
 #main, #menu
-	background-image: url("../img/main-bg.jpg")
-	background-size: cover
-	background-position: center
 .info-wrap 
 	margin: 0 auto
 	display: table-cell
@@ -63,7 +64,6 @@ ul
 	display: table
 	width: 100%
 	.nav
-		opacity: 0
 		li
 			width: 43%
 			height: 43%
@@ -72,22 +72,23 @@ ul
 			margin: 1px
 			position: absolute
 			cursor: pointer
+			opacity: 0
 			.title-nav-wrap
 				display: block
 				color: #f4e8c7
-				font-size: 2.6vw 
-				line-height: 3.4vw
+				font-size: 2.8vw 
+				line-height: 3.5vw
 				text-transform: uppercase
 				text-decoration: none
 				height: 100%
 				.category
-					width: 51%
+					width: 45%
 					min-height: 42%
 					display: inline-block
-					padding: 3% 2% 0
+					padding: 1.5% 2% 0
 					box-sizing: border-box
 					h2
-						margin-bottom: 5%
+						margin-bottom: 3%
 					.description
 						text-align: left
 						font-size: 5.5vh
@@ -101,30 +102,46 @@ ul
 							text-align: right
 		.history
 			background-image: url("../img/menu-history-bg.jpg")
-			top: 7%
-			left: 7%
+			top: -10%
+			left: -10%
 			.category
 				background-color: rgba(22, 38, 60, 0.3)
+		.history-animate
+			top: 7%
+			left: 7%
+			opacity: 1
 		.crimeans
 			background-image: url("../img/menu-crimeans-bg.jpg")
-			top: 7%
-			right: 7%
+			top: -10%
+			right: -10%
 			.category 
 				background-color: rgba(12, 12, 11, 0.28)
+		.crimeans-animate
+			top: 7%
+			right: 7%
+			opacity: 1
 		.heroes
 			background-image: url("../img/menu-heroes-bg.jpg")
-			left: 7%
-			bottom: 7%
+			left: -10%
+			bottom: -10%
 			h2
 				margin-bottom: 3% !important
 			.category 
 				background-color: rgba(12, 12, 11, 0.28)
+		.heroes-animate
+			left: 7%
+			bottom: 7%
+			opacity: 1
 		.nature
 			background-image: url("../img/menu-nature-bg.jpg")
-			right: 7%
-			bottom: 7%
+			right: -10%
+			bottom: -10%
 			.category
 				background-color: rgba(22, 38, 60, 0.3)
+		.nature-animate
+			right: 7%
+			bottom: 7%
+			opacity: 1
 		.zoom
 			width:100%
 			height: 100%
@@ -138,7 +155,6 @@ ul
 				line-height: 3.4vw
 			.category
 				width: 83% !important
-				height: 83%
 				text-align: center
 				font-size: 5.6vw				
 				padding: 5% 2% !important

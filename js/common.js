@@ -19,18 +19,37 @@ $(function () {
 
 		var temp_scrooll = 0;
 
-		function effect(element) {
+		function effect(element, up) {
 
 			$sections.css('z-index', 0);
 			element.css('z-index', 1);
-			$('.nav').animate({'opacity': 0});
 
+			// $('.nav').animate({'opacity': 0});
+			
+			// $(".nav li").eq(0).switchClass("",  $(".nav li").attr('class') + '-animate' , 1000, "easeInOutQuad");
+			// $(".nav li").each(function() {
+   //  			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1600, "easeInOutQuad");
+			// })
 			$( window ).off('scroll', scrollHandler);
 
-			element.animate({right: 0, opacity: "1"}, 1500, function() {
+			$('.active').animate({'opacity': 0}, 1000);
 
-				$('.active').css({'opacity': 0, 'right': "-100%" });
-				$('.nav').animate({'opacity': 1});
+			if (!up) {
+				// вверх
+				$(".nav li").each(function() {
+	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 1000, "easeInOutQuad");
+				})
+				$('.title').animate({'opacity': 1}, 1800);
+			}
+			element.animate({"opacity": 1}, 1000, function() {
+				if (up) {
+					$(".nav li").each(function() {
+		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1000, "easeInOutQuad");
+					})
+					$('.title').animate({'opacity': 0}, 900);
+				} 
+				
+				// $('.nav').animate({'opacity': 1});
 
 				$sections.removeClass('active');
 				element.addClass('active');
@@ -46,22 +65,28 @@ $(function () {
 			var $current_el = $('.active');
 			var cur_index = $current_el.index();
 
+			var up = false;
 			// var new_index = scroll >= temp_scrooll ? cur_index + 1: cur_index - 1;
 			if (scroll >= temp_scrooll) {
 				new_index = cur_index + 1;
+				up = true;
 			} else {
 				new_index = cur_index - 1;
 			}
 
 			if (new_index < $sections.length && new_index >= 0) {
 				var element = $sections.eq(new_index);
-				effect(element);  
+				effect(element, up);  
 			} 
 
 			temp_scrooll = scroll;		
 		}
 
+
+
 		$( window ).on('scroll', scrollHandler);
+
+
 
 		$('.nav li').on('click', function(e) {
 			e.preventDefault();
@@ -75,7 +100,8 @@ $(function () {
 		$('.nav').on('click', '.zoom', function(e) {
 			e.preventDefault();
 			$(this).find('.description').fadeOut()
-			$(this).switchClass("zoom " + 'zoom-' + $(this).attr('class'), '', 1000, "easeInOutQuad", function() {
+			console.log("zoom " + 'zoom-' + $(this).attr('class').split(' ')[3])
+			$(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '', 1000, "easeInOutQuad", function() {
 				$(this).css("z-index","1");
 			});
 			

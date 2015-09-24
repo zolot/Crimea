@@ -8,6 +8,10 @@ body {
   -webkit-font-smoothing: antialised;
   margin: 0;
   padding: 0;
+  background-image: url("../img/main-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 section {
@@ -36,12 +40,6 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-#main, #menu {
-  background-image: url("../img/main-bg.jpg");
-  background-size: cover;
-  background-position: center;
 }
 
 .info-wrap {
@@ -84,10 +82,6 @@ ul {
   width: 100%;
 }
 
-#menu .nav {
-  opacity: 0;
-}
-
 #menu .nav li {
   width: 43%;
   height: 43%;
@@ -96,28 +90,29 @@ ul {
   margin: 1px;
   position: absolute;
   cursor: pointer;
+  opacity: 0;
 }
 
 #menu .nav li .title-nav-wrap {
   display: block;
   color: #f4e8c7;
-  font-size: 2.6vw;
-  line-height: 3.4vw;
+  font-size: 2.8vw;
+  line-height: 3.5vw;
   text-transform: uppercase;
   text-decoration: none;
   height: 100%;
 }
 
 #menu .nav li .title-nav-wrap .category {
-  width: 51%;
+  width: 45%;
   min-height: 42%;
   display: inline-block;
-  padding: 3% 2% 0;
+  padding: 1.5% 2% 0;
   box-sizing: border-box;
 }
 
 #menu .nav li .title-nav-wrap .category h2 {
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }
 
 #menu .nav li .title-nav-wrap .category .description {
@@ -136,28 +131,40 @@ ul {
 
 #menu .nav .history {
   background-image: url("../img/menu-history-bg.jpg");
-  top: 7%;
-  left: 7%;
+  top: -10%;
+  left: -10%;
 }
 
 #menu .nav .history .category {
   background-color: rgba(22, 38, 60, 0.3);
 }
 
+#menu .nav .history-animate {
+  top: 7%;
+  left: 7%;
+  opacity: 1;
+}
+
 #menu .nav .crimeans {
   background-image: url("../img/menu-crimeans-bg.jpg");
-  top: 7%;
-  right: 7%;
+  top: -10%;
+  right: -10%;
 }
 
 #menu .nav .crimeans .category {
   background-color: rgba(12, 12, 11, 0.28);
 }
 
+#menu .nav .crimeans-animate {
+  top: 7%;
+  right: 7%;
+  opacity: 1;
+}
+
 #menu .nav .heroes {
   background-image: url("../img/menu-heroes-bg.jpg");
-  left: 7%;
-  bottom: 7%;
+  left: -10%;
+  bottom: -10%;
 }
 
 #menu .nav .heroes h2 {
@@ -168,14 +175,26 @@ ul {
   background-color: rgba(12, 12, 11, 0.28);
 }
 
+#menu .nav .heroes-animate {
+  left: 7%;
+  bottom: 7%;
+  opacity: 1;
+}
+
 #menu .nav .nature {
   background-image: url("../img/menu-nature-bg.jpg");
-  right: 7%;
-  bottom: 7%;
+  right: -10%;
+  bottom: -10%;
 }
 
 #menu .nav .nature .category {
   background-color: rgba(22, 38, 60, 0.3);
+}
+
+#menu .nav .nature-animate {
+  right: 7%;
+  bottom: 7%;
+  opacity: 1;
 }
 
 #menu .nav .zoom {
@@ -197,7 +216,6 @@ ul {
 
 #menu .nav .zoom .category {
   width: 83% !important;
-  height: 83%;
   text-align: center;
   font-size: 5.6vw;
   padding: 5% 2% !important;
