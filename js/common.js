@@ -87,7 +87,7 @@ $(function () {
 		$( window ).on('scroll', scrollHandler);
 
 
-
+		// SLIDE 2 -> 3
 		$('.nav li').on('click', function(e) {
 			e.preventDefault();
 			$(this).css("z-index","100");
@@ -95,8 +95,26 @@ $(function () {
 			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 1000, "easeInOutQuad", function(){
 				$(this).find('.description').fadeIn()
 			});
+
+			$(this).find('.description').switchClass('', 'zoomed', 1000, 'easeInOutQuad');
+
+			var screenHeight = $(window).height();
+			var screenWidth = $(window).width();
+			var estimatedCategoryWidth = Math.round(screenWidth * 0.7); // 70%
+			var estimatedCategoryHeight = Math.round(screenHeight * 0.8); // 80%
+			var topOffset = (screenHeight - estimatedCategoryHeight) / 2;
+			var leftOffset = (screenWidth - estimatedCategoryWidth) / 2;
+			$(this).find('.category').animate({
+				'top' : topOffset + 'px',
+				'left' : leftOffset + 'px',
+				'width' : estimatedCategoryWidth + 'px',
+				'height' : estimatedCategoryHeight + 'px'
+			}, 1000);
 			
 		});
+
+
+		// SLIDE 3 -> 2
 		$('.nav').on('click', '.zoom', function(e) {
 			e.preventDefault();
 			$(this).find('.description').fadeOut()

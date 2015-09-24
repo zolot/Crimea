@@ -7,7 +7,7 @@ body
 	min-width: 800px
 	position: relative
 	line-height: 1.42857
-	-webkit-font-smoothing: antialised
+	-webkit-font-smoothing: antialiased
 	margin: 0
 	padding: 0
 	background-image: url("../img/main-bg.jpg")
@@ -84,9 +84,11 @@ ul
 				.category
 					width: 45%
 					min-height: 42%
-					display: inline-block
+					display: block
 					padding: 1.5% 2% 0
 					box-sizing: border-box
+					position: relative
+
 					h2
 						margin-bottom: 3%
 					.description
@@ -100,6 +102,12 @@ ul
 						.author
 							display: block
 							text-align: right
+						&.zoomed
+							width: 83% !important
+							text-align: center
+							font-size: 5.6vw
+							padding: 5% 2% !important
+
 		.history
 			background-image: url("../img/menu-history-bg.jpg")
 			top: -10%
@@ -143,21 +151,13 @@ ul
 			bottom: 7%
 			opacity: 1
 		.zoom
-			width:100%
+			width : 100%
 			height: 100%
 			text-align: center
-			display: table
-			.title-nav-wrap
-				display: table-cell
-				vertical-align: middle
+			//display: table
 			h2
 				font-size: 12.6vh
 				line-height: 3.4vw
-			.category
-				width: 83% !important
-				text-align: center
-				font-size: 5.6vw				
-				padding: 5% 2% !important
 		.zoom-history
 			top: 0
 			left: 0
