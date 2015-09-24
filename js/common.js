@@ -96,7 +96,8 @@ $(function () {
 				$(this).find('.description').fadeIn()
 			});
 
-
+			// set center text alignment on header to make sure it smoothly moves into center
+			$(this).find('h2').css('text-align', 'center');
 
 			var screenHeight = $(window).height();
 			var screenWidth = $(window).width();
@@ -127,6 +128,7 @@ $(function () {
 			$(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '', 1000, "easeInOutQuad", function() {
 				$(this).css("z-index","1");
 			});
+
 			// $(this).find('.description').switchClass('', 'zoomed', 1000, 'easeInOutQuad');
 			// $(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '', 1000, "easeInOutQuad", function() {
 			// 	$(this).css("z-index","1");
@@ -147,7 +149,12 @@ $(function () {
 				'font-size' : 50 + 'px',
 				'padding' : oldCategoryPadding
 			}, {
-				 duration: 1000, queue: false 
+				 duration: 1000,
+				queue: false,
+				complete: function() {
+					// when done, move header to the left again
+					$(this).find('h2').css('text-align', 'left');
+				}
 			});
 			
 		});
