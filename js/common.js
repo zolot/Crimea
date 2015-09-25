@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	function wResize() {
 		$("section").css("height", $(window).height());
+
 	};
 	wResize();
 	$(window).resize(function() {
@@ -11,11 +12,14 @@ $(document).ready(function() {
 	
 });
 $(function () {
+		var titleWidth = $('.category').width(); 
+		var titleHeight = $('.category').height(); 
+
 		var section_heigth = $('section').eq(0).height();
 
 		var $sections = $('section');
 
-		$('body').height($('section').length * section_heigth);
+		$('body').height(10 * section_heigth);
 
 		var temp_scrooll = 0;
 
@@ -24,62 +28,87 @@ $(function () {
 			$sections.css('z-index', 0);
 			element.css('z-index', 1);
 
-			// $('.nav').animate({'opacity': 0});
-			
-			// $(".nav li").eq(0).switchClass("",  $(".nav li").attr('class') + '-animate' , 1000, "easeInOutQuad");
-			// $(".nav li").each(function() {
-   //  			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1600, "easeInOutQuad");
-			// })
 			$( window ).off('scroll', scrollHandler);
 
-			$('.active').animate({'opacity': 0}, 1000);
+			$('.active').animate({'opacity': 0}, 1200);
 
-			if (!up) {
+			if (up) {
 				// вверх
 				$(".nav li").each(function() {
-	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 1000, "easeInOutQuad");
+	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 1300, "easeInOutQuad");
 				})
-				$('.title').animate({'opacity': 1}, 1800);
+				$('.title').animate({'opacity': 1}, 2000);
 			}
-			element.animate({"opacity": 1}, 1000, function() {
-				if (up) {
+
+			element.animate({"opacity": 1}, 1500, function() {
+				if (!up) {
 					$(".nav li").each(function() {
-		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1000, "easeInOutQuad");
+		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1300, "easeInOutQuad");
 					})
-					$('.title').animate({'opacity': 0}, 900);
+					$('.title').animate({'opacity': 0}, 1500);
+					
 				} 
 				
-				// $('.nav').animate({'opacity': 1});
-
 				$sections.removeClass('active');
 				element.addClass('active');
 
-				$( window ).on('scroll', scrollHandler);
 			});
-			
+			$( window ).on('scroll', scrollHandler);
 		}
 
 		function scrollHandler(e) {
 
-			var scroll = $(this).scrollTop();  
-			var $current_el = $('.active');
-			var cur_index = $current_el.index();
+			var scroll = $(this).scrollTop();  // позиция скрола 
+			var section_active = $('section.active'); // активная секция
+			var cur_index = section_active.index(); // 
 
 			var up = false;
-			// var new_index = scroll >= temp_scrooll ? cur_index + 1: cur_index - 1;
-			if (scroll >= temp_scrooll) {
+
+			if (scroll >= temp_scrooll) { // сколл вниз
 				new_index = cur_index + 1;
-				up = true;
-			} else {
+				
+			} else { // если вверх
 				new_index = cur_index - 1;
+				up = true;
+				
 			}
 
-			if (new_index < $sections.length && new_index >= 0) {
-				var element = $sections.eq(new_index);
-				effect(element, up);  
-			} 
+			var category_active = $('.zoom');
+			var gallery_active = category_active.find('.gallery');
 
-			temp_scrooll = scroll;		
+			if (category_active.length && up) { // если активна категория и скролл вверх
+				if (gallery_active.is(':visible')) { // если активная галерея $().css('opacity') == 0
+					category_active.find('.category').animate({'opacity': 1}, 1500);
+					gallery_active.find(".two-photos-wrap").each(function() {
+			    			$(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function() {
+				    			gallery_active.hide();
+			    			});
+						})
+
+				} else { // иначе скрываем активную категорию
+					zoomOut($('.zoom'));
+					
+				}
+
+			} else if (category_active.length && !up ){ // если активна категория и скролл вниз
+				
+				gallery_active.show(); // показываем галерею
+				var photos_wrap = gallery_active.find(".two-photos-wrap");
+				if (!get_class(photos_wrap.first()))
+					category_active.find('.category').animate({'opacity': 0}, 1800);
+
+				photos_wrap.each(function() {
+					if (!get_class(this))
+	    				$(this).switchClass("",  $(this).attr('class') + '-animate' , 3000, "easeInOutQuad");
+				})
+
+			} else if (new_index < $sections.length && new_index >= 0) { // анимация секций
+				var element = $sections.eq(new_index); // текущая секция(слайд)
+				effect(element, up);  
+			}
+
+			temp_scrooll = scroll; // записываем предыдущее состояние скрола		
+
 		}
 
 
@@ -88,24 +117,30 @@ $(function () {
 
 
 		// SLIDE 2 -> 3
-		$('.nav li').on('click', function(e) {
+		$('.nav li').on('click', function(e) { 
 			e.preventDefault();
-			$(this).css("z-index","100");
+			if ($('.gallery').is(':visible')) {
+				return 
+			}
+			if ($(this).hasClass('zoom')) {
+				zoomOut(this);
+				return 
+			}
 
-			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 1000, "easeInOutQuad", function(){
+			$(this).css("z-index","100");
+			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 2000, "easeInOutQuad", function(){
 				$(this).find('.description').fadeIn()
 			});
 
-			// set center text alignment on header to make sure it smoothly moves into center
-			$(this).find('h2').css('text-align', 'center');
+
 
 			var screenHeight = $(window).height();
 			var screenWidth = $(window).width();
-			var estimatedCategoryWidth = Math.round(screenWidth * 0.8); // 70%
-			var estimatedCategoryHeight = Math.round(screenHeight * 0.8); // 80%
+			var estimatedCategoryWidth = Math.round(screenWidth * 0.8); 
+			var estimatedCategoryHeight = Math.round(screenHeight * 0.8); 
 			var topOffset = (screenHeight - estimatedCategoryHeight) / 2;
 			var leftOffset = (screenWidth - estimatedCategoryWidth) / 2;
-			var CategoryPadding = estimatedCategoryHeight * 0.13 //5%;
+			var CategoryPadding = estimatedCategoryHeight * 0.13 
 			$(this).find('.category').animate({ 
 				'top' : topOffset + 'px',
 				'left' : leftOffset + 'px',
@@ -113,49 +148,119 @@ $(function () {
 				'height' : estimatedCategoryHeight + 'px',
 				'font-size' : 80 + 'px',
 				'padding-top' : CategoryPadding
-			}, 1000);
+			}, 2000);
 			
 		});
 
 		var categoryHeight = $(".title-nav-wrap").height();
 		var categoryWidth = $(".title-nav-wrap").width();
 		var oldCategoryPadding = $(".category").css("padding");
+
 		// SLIDE 3 -> 2
-		$('.nav').on('click', '.zoom', function(e) {
-			e.preventDefault();
-			$(this).find('.description').fadeOut()
-			console.log("zoom " + 'zoom-' + $(this).attr('class').split(' ')[3])
-			$(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '', 1000, "easeInOutQuad", function() {
-				$(this).css("z-index","1");
+		// $('.nav').on('click', '.zoom', function (e) {
+		// 	console.log('zoom')
+		// 	e.preventDefault();
+		// 	zoomOut(this);
+		// });
+
+		
+
+		function zoomOut(obj) { // скрытие активной категории
+			$(obj).find('.description').fadeOut()
+			$(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 2000, "easeInOutQuad", function() {
+				$(obj).css("z-index","1");
 			});
 
-			// $(this).find('.description').switchClass('', 'zoomed', 1000, 'easeInOutQuad');
-			// $(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '', 1000, "easeInOutQuad", function() {
-			// 	$(this).css("z-index","1");
-			// });
-			// $(this).switchClass("zoom " + $(this).attr('class').split(' ')[3], '',  {
-			// 	'duration': 1000,
-				// 'easing': easeInOutQuad,
-				// queue: false,
-				// "complete": function(){},
-			// })
-			var titleWidth = Math.round(categoryWidth * 0.45); // 70%
-			var titleHeight = Math.round(categoryHeight * 0.42); // 80%
-			$(this).find('.category').animate({ 
+
+			$(obj).find('.category').animate({ 
 				'top' : 0,
 				'left' : 0,
-				'width' : titleWidth + 'px',
-				'height' : titleHeight + 'px',
-				'font-size' : 50 + 'px',
+				'width' : titleWidth,
+				'height' : titleHeight ,
+				'font-size' : 40 + 'px',
 				'padding' : oldCategoryPadding
 			}, {
-				 duration: 1000,
-				queue: false,
-				complete: function() {
-					// when done, move header to the left again
-					$(this).find('h2').css('text-align', 'left');
-				}
+				 duration: 2000, queue: false 
 			});
-			
-		});
+		}
+
+/*		$('.photo-wrap').click(function(e) {
+			e.preventDefault();
+			console.log('click img')
+			return false;
+		})*/
+});
+
+
+function OnImageLoad(evt) {
+
+    var img = evt.currentTarget;
+
+    // what's the size of this image and it's parent
+    var w = $(img).width();
+    var h = $(img).height();
+    var tw = $(img).parent().width();
+    var th = $(img).parent().height();
+
+    // compute the new size and offsets
+    var result = ScaleImage(w, h, tw, th, false);
+
+    // adjust the image coordinates and size
+    img.width = result.width;
+    img.height = result.height;
+
+    $(img).css("left", result.targetleft);
+    $(img).css("top", result.targettop);
+}
+
+function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
+
+    var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+
+    if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
+        return result;
+    }
+
+    // scale to the target width
+    var scaleX1 = targetwidth;
+    var scaleY1 = (srcheight * targetwidth) / srcwidth;
+
+    // scale to the target height
+    var scaleX2 = (srcwidth * targetheight) / srcheight;
+    var scaleY2 = targetheight;
+
+    // now figure out which one we should use
+    var fScaleOnWidth = (scaleX2 > targetwidth);
+    if (fScaleOnWidth) {
+        fScaleOnWidth = fLetterBox;
+    }
+    else {
+       fScaleOnWidth = !fLetterBox;
+    }
+
+    if (fScaleOnWidth) {
+        result.width = Math.floor(scaleX1);
+        result.height = Math.floor(scaleY1);
+        result.fScaleToTargetWidth = true;
+    }
+    else {
+        result.width = Math.floor(scaleX2);
+        result.height = Math.floor(scaleY2);
+        result.fScaleToTargetWidth = false;
+    }
+    result.targetleft = Math.floor((targetwidth - result.width) / 2);
+    result.targettop = Math.floor((targetheight - result.height) / 2);
+
+    return result;
+}
+function get_class(obj, str) {
+	str = str || 'animate';
+	cls = $(obj).attr('class').split(' ');
+	class_name = '';
+	$.each(cls, function(index, value){
+		if (value.indexOf(str) > -1) {
+			class_name = class_name + ' ' + value;
+		}
 	});
+	return class_name;
+}
