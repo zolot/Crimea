@@ -77,9 +77,9 @@ $(function () {
 			var gallery_active = category_active.find('.gallery');
 
 			if (category_active.length && up) { // если активна категория и скролл вверх
-				if (gallery_active.is(':visible')) { // если активная галерея $().css('opacity') == 0
+				if (gallery_active.is(':visible')) { // если активная галерея 
 					category_active.find('.category').animate({'opacity': 1}, 1500);
-					gallery_active.find(".two-photos-wrap").each(function() {
+					gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function() {
 			    			$(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function() {
 				    			gallery_active.hide();
 			    			});
@@ -93,7 +93,7 @@ $(function () {
 			} else if (category_active.length && !up ){ // если активна категория и скролл вниз
 				
 				gallery_active.show(); // показываем галерею
-				var photos_wrap = gallery_active.find(".two-photos-wrap");
+				var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
 				if (!get_class(photos_wrap.first()))
 					category_active.find('.category').animate({'opacity': 0}, 1800);
 
@@ -183,12 +183,6 @@ $(function () {
 				 duration: 2000, queue: false 
 			});
 		}
-
-/*		$('.photo-wrap').click(function(e) {
-			e.preventDefault();
-			console.log('click img')
-			return false;
-		})*/
 });
 
 
