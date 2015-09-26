@@ -82,6 +82,25 @@ ul {
   width: 100%;
 }
 
+#menu .menu-line {
+  background-color: rgba(29, 42, 71, 0.4);
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10000;
+}
+
+#menu .menu-line a {
+  height: 45px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ede3c1;
+  font-size: 16px;
+  display: inline-block;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
 #menu .nav li {
   width: 43%;
   height: 43%;

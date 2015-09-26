@@ -76,13 +76,16 @@ $(function () {
 			var category_active = $('.zoom');
 			var gallery_active = category_active.find('.gallery');
 
+
 			if (category_active.length && up) { // если активна категория и скролл вверх
 				if (gallery_active.is(':visible')) { // если активная галерея 
+					$('.menu-line').css({'width': '100%'});
 					category_active.find('.category').animate({'opacity': 1}, 1500);
 					gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function() {
 			    			$(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function() {
 				    			gallery_active.hide();
 			    			});
+
 						})
 
 				} else { // иначе скрываем активную категорию
@@ -91,7 +94,8 @@ $(function () {
 				}
 
 			} else if (category_active.length && !up ){ // если активна категория и скролл вниз
-				
+				$('.menu-line').css({'width': '480px'});
+					console.log("480");
 				gallery_active.show(); // показываем галерею
 				var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
 				if (!get_class(photos_wrap.first()))
@@ -119,9 +123,6 @@ $(function () {
 		// SLIDE 2 -> 3
 		$('.nav li').on('click', function(e) { 
 			e.preventDefault();
-			if ($('.gallery').is(':visible')) {
-				return 
-			}
 			if ($(this).hasClass('zoom')) {
 				zoomOut(this);
 				return 
@@ -169,7 +170,12 @@ $(function () {
 			$(obj).find('.description').fadeOut()
 			$(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 2000, "easeInOutQuad", function() {
 				$(obj).css("z-index","1");
+				
+			console.log("hhh")
 			});
+			
+
+
 
 
 			$(obj).find('.category').animate({ 
