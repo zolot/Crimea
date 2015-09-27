@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	function wResize() {
-		$("section").css("height", $(window).height());
+		$("section, #about-project").css("height", $(window).height());
 
 	};
 	wResize();

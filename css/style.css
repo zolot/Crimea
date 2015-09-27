@@ -23,6 +23,45 @@ section {
   z-index: 0;
 }
 
+#about-project {
+  position: relative;
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+#about-project .description {
+  font-size: 24px;
+  text-align: center;
+  background-color: rgba(14, 37, 70, 0.3);
+  display: inline-block;
+  padding: 1%;
+  width: 87%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  color: #f4e8c7;
+}
+
+#about-project .description h2 {
+  font-size: 60px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#about-project .description h3 {
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: normal;
+}
+
+#about-project .description p {
+  line-height: 30px;
+}
+
+#about-project .description .potential {
+  margin-top: 0;
+}
+
 .active {
   opacity: 1;
   right: 0;
