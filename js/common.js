@@ -11,6 +11,17 @@ $(document).ready(function() {
 
 	
 });
+$(window).load(function() {
+
+    setTimeout(function() {
+        $('.title').fadeIn();
+    }, 3000);
+
+/*    setTimeout(function() {
+         $('.title h1').fadeIn();
+    }, 6000);*/
+});
+
 $(function () {
 		var titleWidth = $('.category').width(); 
 		var titleHeight = $('.category').height(); 
@@ -19,7 +30,7 @@ $(function () {
 
 		var $sections = $('section');
 
-		$('body').height(10 * section_heigth);
+		$('body').height(10 * section_heigth); // увеличиваем высоту в 10 раз
 
 		var temp_scrooll = 0;
 
@@ -35,17 +46,17 @@ $(function () {
 			if (up) {
 				// вверх
 				$(".nav li").each(function() {
-	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 1300, "easeInOutQuad");
+	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 3000, "easeInOutQuad");
 				})
-				$('.title').animate({'opacity': 1}, 2000);
+				$('.title').animate({'opacity': 1},3000);
 			}
 
 			element.animate({"opacity": 1}, 1500, function() {
 				if (!up) {
 					$(".nav li").each(function() {
-		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 1300, "easeInOutQuad");
+		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 3000, "easeInOutQuad");
 					})
-					$('.title').animate({'opacity': 0}, 1500);
+					$('.title').animate({'opacity': 0}, 2000);
 					
 				} 
 				
@@ -80,7 +91,7 @@ $(function () {
 			if (category_active.length && up) { // если активна категория и скролл вверх
 				if (gallery_active.is(':visible')) { // если активная галерея 
 					$('.menu-line').css({'width': '100%'});
-					category_active.find('.category').animate({'opacity': 1}, 1500);
+					category_active.find('.category').animate({'opacity': 1}, 3000);
 					gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function() {
 			    			$(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function() {
 				    			gallery_active.hide();
@@ -99,7 +110,7 @@ $(function () {
 				gallery_active.show(); // показываем галерею
 				var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
 				if (!get_class(photos_wrap.first()))
-					category_active.find('.category').animate({'opacity': 0}, 1800);
+					category_active.find('.category').animate({'opacity': 0}, 3000);
 
 				photos_wrap.each(function() {
 					if (!get_class(this))
@@ -129,8 +140,8 @@ $(function () {
 			}
 
 			$(this).css("z-index","100");
-			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 2000, "easeInOutQuad", function(){
-				$(this).find('.description').fadeIn()
+			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 3000, "easeInOutQuad", function(){
+				$(this).find('.description').fadeIn();
 			});
 
 
@@ -149,7 +160,7 @@ $(function () {
 				'height' : estimatedCategoryHeight + 'px',
 				'font-size' : 80 + 'px',
 				'padding-top' : CategoryPadding
-			}, 2000);
+			}, 3000);
 			
 		});
 
@@ -168,15 +179,10 @@ $(function () {
 
 		function zoomOut(obj) { // скрытие активной категории
 			$(obj).find('.description').fadeOut()
-			$(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 2000, "easeInOutQuad", function() {
+			$(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 3000, "easeInOutQuad", function() {
 				$(obj).css("z-index","1");
 				
-			console.log("hhh")
 			});
-			
-
-
-
 
 			$(obj).find('.category').animate({ 
 				'top' : 0,
@@ -186,7 +192,7 @@ $(function () {
 				'font-size' : 40 + 'px',
 				'padding' : oldCategoryPadding
 			}, {
-				 duration: 2000, queue: false 
+				 duration: 3000, queue: false 
 			});
 		}
 });

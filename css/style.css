@@ -85,6 +85,7 @@ ul {
   margin: 0 auto;
   display: table-cell;
   vertical-align: middle;
+  height: 100%;
 }
 
 #main {
@@ -96,7 +97,7 @@ ul {
 #main .title {
   text-align: center;
   background-color: rgba(14, 37, 70, 0.3);
-  display: inline-block;
+  display: none;
   padding: 7% 3%;
   width: 87%;
   margin: 0 auto;
