@@ -1,200 +1,180 @@
-$(document).ready(function() {
+$(document).ready(function () {
+    resizeAllSectionsToWindowHeight();
 
-	function wResize() {
-		$("section, #about-project").css("height", $(window).height());
+    $(window).resize(function () {
+        resizeAllSectionsToWindowHeight()
+    });
 
-	};
-	wResize();
-	$(window).resize(function() {
-		wResize()
-	});
-
-	
-});
-$(window).load(function() {
-
-    setTimeout(function() {
+    setTimeout(function () {
         $('.title').fadeIn();
     }, 3000);
-
-/*    setTimeout(function() {
-         $('.title h1').fadeIn();
-    }, 6000);*/
 });
 
 $(function () {
-		var titleWidth = $('.category').width(); 
-		var titleHeight = $('.category').height(); 
+    var titleWidth = $('.category').width();
+    var titleHeight = $('.category').height();
 
-		var section_heigth = $('section').eq(0).height();
+    var firstSlide = $('section').eq(0);
+    var section_height = firstSlide.height();
 
-		var $sections = $('section');
+    var allSections = $('section');
 
-		$('body').height(10 * section_heigth); // увеличиваем высоту в 10 раз
+    $('body').height(10 * section_height); // увеличиваем высоту в 10 раз --> ЗАЧЕМ?
 
-		var temp_scrooll = 0;
+    var lastScrollPosition = 0;
 
-		function effect(element, up) {
+    function effect(element, up) {
+        allSections.css('z-index', 0);
+        element.css('z-index', 1);
 
-			$sections.css('z-index', 0);
-			element.css('z-index', 1);
+        $(window).off('scroll', scrollHandler);
+        $('.active').animate({'opacity': 0}, 1200);
 
-			$( window ).off('scroll', scrollHandler);
+        if (up) {
+            // вверх
+            $(".nav li").each(function () {
+                $(this).switchClass($(this).attr('class').split(' ')[1], "", 3000, "easeInOutQuad");
+            })
+            $('.title').animate({'opacity': 1}, 3000);
+        }
 
-			$('.active').animate({'opacity': 0}, 1200);
+        element.animate({"opacity": 1}, 1500, function () {
+            if (!up) {
+                $(".nav li").each(function () {
+                    $(this).switchClass("", $(this).attr('class') + '-animate', 3000, "easeInOutQuad");
+                })
+                $('.title').animate({'opacity': 0}, 2000);
 
-			if (up) {
-				// вверх
-				$(".nav li").each(function() {
-	    			$(this).switchClass( $(this).attr('class').split(' ')[1], "", 3000, "easeInOutQuad");
-				})
-				$('.title').animate({'opacity': 1},3000);
-			}
+            }
 
-			element.animate({"opacity": 1}, 1500, function() {
-				if (!up) {
-					$(".nav li").each(function() {
-		    			$(this).switchClass("",  $(this).attr('class') + '-animate' , 3000, "easeInOutQuad");
-					})
-					$('.title').animate({'opacity': 0}, 2000);
-					
-				} 
-				
-				$sections.removeClass('active');
-				element.addClass('active');
+            allSections.removeClass('active');
+            element.addClass('active');
 
-			});
-			$( window ).on('scroll', scrollHandler);
-		}
+        });
+        $(window).on('scroll', scrollHandler);
+    }
 
-		function scrollHandler(e) {
+    function scrollHandler() {
+        var currentScrollPosition = $(this).scrollTop();
+        var section_active = $('section.active');
+        var cur_index = section_active.index();
 
-			var scroll = $(this).scrollTop();  // позиция скрола 
-			var section_active = $('section.active'); // активная секция
-			var cur_index = section_active.index(); // 
+        var up = false;
 
-			var up = false;
+        if (currentScrollPosition >= lastScrollPosition) { // сколл вниз
+            new_index = cur_index + 1;
 
-			if (scroll >= temp_scrooll) { // сколл вниз
-				new_index = cur_index + 1;
-				
-			} else { // если вверх
-				new_index = cur_index - 1;
-				up = true;
-				
-			}
+        } else { // если вверх
+            new_index = cur_index - 1;
+            up = true;
 
-			var category_active = $('.zoom');
-			var gallery_active = category_active.find('.gallery');
+        }
 
+        var category_active = $('.zoom');
+        var gallery_active = category_active.find('.gallery');
 
-			if (category_active.length && up) { // если активна категория и скролл вверх
-				if (gallery_active.is(':visible')) { // если активная галерея 
-					$('.menu-line').css({'width': '100%'});
-					category_active.find('.category').animate({'opacity': 1}, 3000);
-					gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function() {
-			    			$(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function() {
-				    			gallery_active.hide();
-			    			});
+        if (category_active.length && up) { // если активна категория и скролл вверх
+            if (gallery_active.is(':visible')) { // если активная галерея 
+                $('.menu-line').css({'width': '100%'});
+                category_active.find('.category').animate({'opacity': 1}, 3000);
+                gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function () {
+                    $(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function () {
+                        gallery_active.hide();
+                    });
 
-						})
+                })
 
-				} else { // иначе скрываем активную категорию
-					zoomOut($('.zoom'));
-					
-				}
+            } else { // иначе скрываем активную категорию
+                zoomOut($('.zoom'));
+            }
+        } else if (category_active.length && !up) { // если активна категория и скролл вниз
+            $('.menu-line').css({'width': '480px'});
+            console.log("480");
+            gallery_active.show(); // показываем галерею
+            var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
+            if (!get_class(photos_wrap.first()))
+                category_active.find('.category').animate({'opacity': 0}, 3000);
 
-			} else if (category_active.length && !up ){ // если активна категория и скролл вниз
-				$('.menu-line').css({'width': '480px'});
-					console.log("480");
-				gallery_active.show(); // показываем галерею
-				var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
-				if (!get_class(photos_wrap.first()))
-					category_active.find('.category').animate({'opacity': 0}, 3000);
+            photos_wrap.each(function () {
+                if (!get_class(this))
+                    $(this).switchClass("", $(this).attr('class') + '-animate', 3000, "easeInOutQuad");
+            })
 
-				photos_wrap.each(function() {
-					if (!get_class(this))
-	    				$(this).switchClass("",  $(this).attr('class') + '-animate' , 3000, "easeInOutQuad");
-				})
+        } else if (new_index < allSections.length && new_index >= 0) { // анимация секций
+            var element = allSections.eq(new_index); // текущая секция(слайд)
+            effect(element, up);
+        }
 
-			} else if (new_index < $sections.length && new_index >= 0) { // анимация секций
-				var element = $sections.eq(new_index); // текущая секция(слайд)
-				effect(element, up);  
-			}
+        lastScrollPosition = currentScrollPosition; // записываем предыдущее состояние скрола
 
-			temp_scrooll = scroll; // записываем предыдущее состояние скрола		
-
-		}
+    }
 
 
-
-		$( window ).on('scroll', scrollHandler);
-
-
-		// SLIDE 2 -> 3
-		$('.nav li').on('click', function(e) { 
-			e.preventDefault();
-			if ($(this).hasClass('zoom')) {
-				zoomOut(this);
-				return 
-			}
-
-			$(this).css("z-index","100");
-			$(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class') , 3000, "easeInOutQuad", function(){
-				$(this).find('.description').fadeIn();
-			});
+    $(window).on('scroll', scrollHandler);
 
 
+    // SLIDE 2 -> 3
+    $('.nav li').on('click', function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('zoom')) {
+            zoomOut(this);
+            return
+        }
 
-			var screenHeight = $(window).height();
-			var screenWidth = $(window).width();
-			var estimatedCategoryWidth = Math.round(screenWidth * 0.8); 
-			var estimatedCategoryHeight = Math.round(screenHeight * 0.8); 
-			var topOffset = (screenHeight - estimatedCategoryHeight) / 2;
-			var leftOffset = (screenWidth - estimatedCategoryWidth) / 2;
-			var CategoryPadding = estimatedCategoryHeight * 0.13 
-			$(this).find('.category').animate({ 
-				'top' : topOffset + 'px',
-				'left' : leftOffset + 'px',
-				'width' : estimatedCategoryWidth + 'px',
-				'height' : estimatedCategoryHeight + 'px',
-				'font-size' : 80 + 'px',
-				'padding-top' : CategoryPadding
-			}, 3000);
-			
-		});
+        $(this).css("z-index", "100");
+        $(this).switchClass("", "zoom " + 'zoom-' + $(this).attr('class'), 3000, "easeInOutQuad", function () {
+            $(this).find('.description').fadeIn();
+        });
 
-		var categoryHeight = $(".title-nav-wrap").height();
-		var categoryWidth = $(".title-nav-wrap").width();
-		var oldCategoryPadding = $(".category").css("padding");
 
-		// SLIDE 3 -> 2
-		// $('.nav').on('click', '.zoom', function (e) {
-		// 	console.log('zoom')
-		// 	e.preventDefault();
-		// 	zoomOut(this);
-		// });
+        var screenHeight = $(window).height();
+        var screenWidth = $(window).width();
+        var estimatedCategoryWidth = Math.round(screenWidth * 0.8);
+        var estimatedCategoryHeight = Math.round(screenHeight * 0.8);
+        var topOffset = (screenHeight - estimatedCategoryHeight) / 2;
+        var leftOffset = (screenWidth - estimatedCategoryWidth) / 2;
+        var CategoryPadding = estimatedCategoryHeight * 0.13
+        $(this).find('.category').animate({
+            'top': topOffset + 'px',
+            'left': leftOffset + 'px',
+            'width': estimatedCategoryWidth + 'px',
+            'height': estimatedCategoryHeight + 'px',
+            'font-size': 80 + 'px',
+            'padding-top': CategoryPadding
+        }, 3000);
 
-		
+    });
 
-		function zoomOut(obj) { // скрытие активной категории
-			$(obj).find('.description').fadeOut()
-			$(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 3000, "easeInOutQuad", function() {
-				$(obj).css("z-index","1");
-				
-			});
+    var categoryHeight = $(".title-nav-wrap").height();
+    var categoryWidth = $(".title-nav-wrap").width();
+    var oldCategoryPadding = $(".category").css("padding");
 
-			$(obj).find('.category').animate({ 
-				'top' : 0,
-				'left' : 0,
-				'width' : titleWidth,
-				'height' : titleHeight ,
-				'font-size' : 40 + 'px',
-				'padding' : oldCategoryPadding
-			}, {
-				 duration: 3000, queue: false 
-			});
-		}
+    // SLIDE 3 -> 2
+    // $('.nav').on('click', '.zoom', function (e) {
+    // 	console.log('zoom')
+    // 	e.preventDefault();
+    // 	zoomOut(this);
+    // });
+
+
+    function zoomOut(obj) { // скрытие активной категории
+        $(obj).find('.description').fadeOut()
+        $(obj).switchClass("zoom " + $(obj).attr('class').split(' ')[3], '', 3000, "easeInOutQuad", function () {
+            $(obj).css("z-index", "1");
+
+        });
+
+        $(obj).find('.category').animate({
+            'top': 0,
+            'left': 0,
+            'width': titleWidth,
+            'height': titleHeight,
+            'font-size': 40 + 'px',
+            'padding': oldCategoryPadding
+        }, {
+            duration: 3000, queue: false
+        });
+    }
 });
 
 
@@ -221,7 +201,7 @@ function OnImageLoad(evt) {
 
 function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
 
-    var result = { width: 0, height: 0, fScaleToTargetWidth: true };
+    var result = {width: 0, height: 0, fScaleToTargetWidth: true};
 
     if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
         return result;
@@ -241,7 +221,7 @@ function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) 
         fScaleOnWidth = fLetterBox;
     }
     else {
-       fScaleOnWidth = !fLetterBox;
+        fScaleOnWidth = !fLetterBox;
     }
 
     if (fScaleOnWidth) {
@@ -260,13 +240,18 @@ function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) 
     return result;
 }
 function get_class(obj, str) {
-	str = str || 'animate';
-	cls = $(obj).attr('class').split(' ');
-	class_name = '';
-	$.each(cls, function(index, value){
-		if (value.indexOf(str) > -1) {
-			class_name = class_name + ' ' + value;
-		}
-	});
-	return class_name;
+    str = str || 'animate';
+    cls = $(obj).attr('class').split(' ');
+    class_name = '';
+    $.each(cls, function (index, value) {
+        if (value.indexOf(str) > -1) {
+            class_name = class_name + ' ' + value;
+        }
+    });
+    return class_name;
 }
+
+/* CHECKED FUNCTIONS */
+function resizeAllSectionsToWindowHeight() {
+    $("section, #about-project").css("height", $(window).height());
+};
