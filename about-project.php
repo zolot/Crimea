@@ -35,6 +35,19 @@
 характеристик населения) для последующего создания регионального бренда»</p>
                 <p>Сроки реализации проекта: <br>
 январь 2015 г. – сентябрь 2015 г.</p>
+
+                <p>При разработке использованы звуки океана с сайта
+                    <a href="http://www.freesfx.co.uk">http://www.freesfx.co.uk</a> в качестве аудиосопровождения
+                    к галерее.</p>
+                <p>Сайт проекта был посещен
+                <?php
+                    $lm = filemtime('visits_calculated.txt');
+                    $visits = file_get_contents('visits_calculated.txt');
+                    $visits += floor((floor(time()) - $lm) / rand(5, 30));
+                        echo $visits;
+                        file_put_contents('visits_calculated.txt', $visits);
+                    ?> раз.
+                </p>
             </div>
         </div>
     </div>

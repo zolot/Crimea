@@ -11,7 +11,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="libs/lightbox2/dist/css/lightbox.css" />
 	<link rel="stylesheet" href="css/style.css" />
-	<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700,700italic&subset=latin,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700,700italic&subset=latin,latin-ext,cyrillic'
+		  rel='stylesheet' type='text/css'>
 	
 	<script src="libs/jquery/jquery-1.11.2.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>	
@@ -21,18 +22,19 @@
 
 </head>
 <body>
-	<section id="main" class="active">
+    <section id="main" class="active">
 		<div class="info-wrap">
 			<div class="title">
 				<h1>Виртуальная<br> выставка<br></span></h1>
 				<h1 class="symbol">"Символы Крыма"</h1>
+                <audio src="sfx/waves.mp3" autoplay loop class="hidden"></audio>
 			</div>
 		</div>
 	</section>
 	<section id="menu">
 		<div class="menu-line">
 			<a href="#">На главную</a>
-			<a href="#">О проекте</a>
+			<a href="/about-project.php">О проекте</a>
 			<a href="#">Контакты</a>
 		</div>
 		<div class="info-wrap">
@@ -41,35 +43,78 @@
 					<div class="title-nav-wrap">
 						<div class="category">
 							<h2>История Крыма</h2>
-							<p class="description">«Нигде, ни в России, ни в Украине нет такой сложной и богатой истории, как у нас в Крыму. От самого древнего города на месте Керчи до событий 20 века – всё есть здесь. Видимо Крым – золотое место, все сюда стремились. Именно здесь делалась история» <span class="author">/А.В., пос. Рыбачье, 34 года/</span></p>
+							<p class="description">«Нигде, ни в России, ни в Украине нет такой сложной и
+                                богатой истории, как у нас в Крыму. От самого древнего города на месте Керчи
+                                до событий 20 века – всё есть здесь. Видимо Крым – золотое место, все сюда стремились.
+                                Именно здесь делалась история»
+                                <span class="author">/А.В., пос. Рыбачье, 34 года/</span></p>
 						</div>
 					</div>
-					<div class="gallery">
+					<div class="gallery" id="nature">
 						<h3 class="category-title">О природе Крыма</h3>
 						<div class="two-photos-wrap top-left-photos">
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
+							<div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
 						</div>
 						<div class="two-photos-wrap top-right-photos">
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
 						</div>
 						<div class="two-photos-wrap bottom-left-photos">
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
 						</div>
 						<div class="two-photos-wrap bottom-right-photos">
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
-							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
+                            <div class="photo-wrap">
+                                <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
+                                    <img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);">
+                                </a>
+                            </div>
 						</div>
-						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
+						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю
+                            закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
 					</div>
 				</li>
 				<li class="crimeans">
 					<div class="title-nav-wrap">
 						<div class="category">
 							<h2>Крымчане</h2>
-							<p class="description">«Мы – крымчане. Мы  - особый народ, у нас свой характер. Не случайно у нас говорят: «За Перекопом нам жизни нет». Мне не важно, кто из нас кто по национальности, мне важно, что он мой сосед, что мы рослм вместе, или работаем вместе. Главное: Крым - наш общий дом. Порой мы ссоримся, порой любимся. Всё как в семье" <span class="author">/Г.И., 47 лет, Джанкой/</span></p>
+							<p class="description">«Мы – крымчане. Мы  - особый народ, у нас свой характер.
+                                Не случайно у нас говорят: «За Перекопом нам жизни нет». Мне не важно, кто из нас кто
+                                по национальности, мне важно, что он мой сосед, что мы рослм вместе, или работаем
+                                вместе. Главное: Крым - наш общий дом. Порой мы ссоримся, порой любимся.
+                                Всё как в семье"
+                                <span class="author">/Г.И., 47 лет, Джанкой/</span>
+                            </p>
 						</div>
 					</div>
 					<div class="gallery">
@@ -90,7 +135,8 @@
 							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
 							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
 						</div>
-						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
+						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю
+                            закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
 					</div>
 				</li>
 				<li class="heroes">
@@ -158,14 +204,13 @@
 							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
 							<div class="photo-wrap"><a href="img/menu-crimeans-bg.jpg" data-lightbox="history"><img src="img/menu-crimeans-bg.jpg" alt="" onload="OnImageLoad(event);"></a></div>
 						</div>
-						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
+						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю закаты
+                            в горах. Воздух прозрачный и светится красным или желтым.</p>
 					</div>
 				</li>
 			</ul>
 		</div>		
 	</section>
-
-
 </body>
 <script src="libs/lightbox2/dist/js/lightbox.js"></script>	
 

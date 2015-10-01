@@ -14,6 +14,8 @@ body
 	background-size: cover
 	background-position: center
 	background-attachment: fixed
+a
+	color: #f4e8c7
 section
 	position: relative
 	display: none
@@ -149,8 +151,8 @@ ul
 
 		.history
 			background-image: url("../img/menu-history-bg.jpg")
-			top: -10%
-			left: -10%
+			top: -100%
+			left: -100%
 			.category
 				background-color: rgba(22, 38, 60, 0.3)
 		.history-animate
@@ -159,8 +161,8 @@ ul
 			opacity: 1
 		.crimeans
 			background-image: url("../img/menu-crimeans-bg.jpg")
-			top: -10%
-			right: -10%
+			top: -100%
+			right: 100%
 			.category 
 				background-color: rgba(12, 12, 11, 0.28)
 		.crimeans-animate
@@ -169,8 +171,8 @@ ul
 			opacity: 1
 		.heroes
 			background-image: url("../img/menu-heroes-bg.jpg")
-			left: -10%
-			bottom: -10%
+			left: -100%
+			bottom: 100%
 			h2
 				margin-bottom: 3% !important
 			.category 
@@ -181,8 +183,8 @@ ul
 			opacity: 1
 		.nature
 			background-image: url("../img/menu-nature-bg.jpg")
-			right: -10%
-			bottom: -10%
+			right: 100%
+			bottom: 100%
 			.category
 				background-color: rgba(22, 38, 60, 0.3)
 		.nature-animate
@@ -295,3 +297,18 @@ ul
 				bottom: 50%
 				margin-bottom: -250px
 
+#arrow_helper
+	position: absolute
+	height: 100px
+	width: 140px
+	bottom: -100px
+	left: 50%
+	margin-left: -70px
+	z-index: 999
+	p
+		color: white
+		text-align: center
+	img
+		display: block
+		width: 60px
+		margin: 0 auto
