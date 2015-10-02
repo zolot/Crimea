@@ -1,16 +1,32 @@
 $(document).ready(function () {
+
+    // setup appropriate section sizing
     resizeAllSectionsToWindowHeight();
+    resizePrimaryMenu();
 
     $(window).resize(function () {
-        resizeAllSectionsToWindowHeight()
+        resizeAllSectionsToWindowHeight();
+        resizePrimaryMenu();
     });
 
-    resizePrimaryMenu();
+    // set default scroll positions
+    window.scrollTo(0, 0);
+    window.lastScrollPosition = 0;
+    $(window).on('scroll', function() {
+        setTimeout(function() {
+            window.lastScrollPosition = $(window).scrollTop();
+        }, 50);
+    });
+
+    // animate title appearance
     setTimeout(function () {
         $('.title').fadeIn(1000, function() {
-            displayDownArrowHelper();
+            //and then animate arrow display
+            displayDownArrowHelper($('#main'));
         });
     }, 2000);
+
+
 });
 
 $(function () {
@@ -24,93 +40,94 @@ $(function () {
 
     $('body').height(10 * section_height); // увеличиваем высоту в 10 раз --> ЗАЧЕМ?
 
-    window.lastScrollPosition = 0;
+    //window.lastScrollPosition = 0;
 
-    function effect(element, up) {
-        allSections.css('z-index', 0);
-        element.css('z-index', 1);
+    function slide1toSlide2ScrollHandler() {
+        console.log('slide 1 scroll handler');
+        var currentScrollPosition = $(window).scrollTop();
 
-        $('.active').animate({'opacity': 0}, 1200);
+        // if we scroll down
+        if (currentScrollPosition > window.lastScrollPosition) {
+            $(window).off('scroll', slide1toSlide2ScrollHandler);
+            // animate
+            var allSections = $('section');
+            allSections.css('z-index', 0);
 
-        if (up) {
-            // вверх
+            var menu = $('#menu');
+            menu.addClass('active');
+            menu.css('z-index', 1);
+
+            var title = $('#main');
+
+            title.animate({'opacity': 0}, 1200);
+            menu.animate({"opacity": 1}, 1500, function () {
+                var afterPresent = $.Deferred();
+                afterPresent.then(function() {
+                    window.lastScrollPosition = $(window).scrollTop();
+                    $(window).on('scroll', slide2ToSlide1ScrollHandler);
+                });
+
+                presentPrimaryMenu(true, afterPresent);
+            });
+        }
+
+    }
+
+    function slide2ToSlide1ScrollHandler() {
+        console.log('slide 2 scroll handler');
+        var currentScrollPosition = $(window).scrollTop();
+
+        // if we scroll up
+        if (currentScrollPosition < window.lastScrollPosition) {
+            $(window).off('scroll', slide2ToSlide1ScrollHandler);
+            // animate
+            var allSections = $('section');
+            //allSections.css('z-index', 0);
+
+            var menu = $('#menu');
+            menu.css('z-index', 1);
+            var title = $('#main');
+
             var afterHide = $.Deferred();
             afterHide.then(function() {
-                $('.title').animate({'opacity': 1}, 3000, function() {
-                    window.lastScrollPosition = $(window).scrollTop();
-                    $(window).on('scroll', scrollHandler);
+                menu.animate({'opacity': 0}, 1000, function() {
+                    title.animate({'opacity' : 1}, 1500, function() {
+                        window.lastScrollPosition = $(window).scrollTop();
+                        $(window).on('scroll', slide1toSlide2ScrollHandler);
+                    });
                 });
             });
             hidePrimaryMenu(true, afterHide);
         }
 
-        element.animate({"opacity": 1}, 1500, function () {
-
-            if (!up) {
-                var afterPresent = $.Deferred();
-                afterPresent.then(function() {
-                    window.lastScrollPosition = $(window).scrollTop();
-                    $(window).on('scroll', scrollHandler);
-                });
-
-                presentPrimaryMenu(true, afterPresent);
-                $('.title').animate({'opacity': 0}, 2000);
-            }
-
-            allSections.removeClass('active');
-            element.addClass('active');
-        });
+        window.lastScrollPosition = currentScrollPosition;
     }
 
-    function scrollHandler() {
-        console.log('consolling');
-        $(window).off('scroll', scrollHandler);
-        removeDownArrowHelper();
+    function slide2ZoomOut() {
+        console.log('slide 2 zoom out scroll handler');
+        var currentScrollPosition = $(window).scrollTop();
 
-        var currentScrollPosition = $(this).scrollTop();
-        var section_active = $('section.active');
-        var cur_index = section_active.index();
-
-        var up = false;
-
-
-        if (currentScrollPosition >= window.lastScrollPosition) { // сколл вниз
-            new_index = cur_index + 1;
-        } else { // если вверх
-            new_index = cur_index - 1;
-            up = true;
+        // if we scroll up
+        if (currentScrollPosition < window.lastScrollPosition) {
+            zoomOut($('.opened'));
         }
-        window.lastScrollPosition = currentScrollPosition; // записываем предыдущее состояние скрола
 
-        //new_index < allSections.length && new_index >= 0
-        console.log('new index ' + new_index);
-        console.log('all sections ' + allSections.length);
+    }
 
+    function slide2PresentGallery() {
+        console.log('slide 2 present gallery handler');
+        var currentScrollPosition = $(window).scrollTop();
+        console.log(currentScrollPosition + ' vs ' + window.lastScrollPosition);
 
-        var category_active = $('.zoom');
-        var gallery_active = category_active.find('.gallery');
+        // if we scroll up
+        if (currentScrollPosition > window.lastScrollPosition) {
+            console.log('why not go for it');
+            $(window).off('scroll', slide2PresentGallery);
+            $(window).off('scroll', slide2ZoomOut);
 
-        if (category_active.length && up) { // если активна категория и скролл вверх
-            console.log('scenario 1');
-            if (gallery_active.is(':visible')) { // если активная галерея
-                console.log('scenario 2');
-                $('.menu-line').css({'width': '100%'});
-                category_active.find('.category').animate({'opacity': 1}, 3000);
-                gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function () {
-                    $(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function () {
-                        gallery_active.hide();
-                    });
-
-                })
-
-            } else { // иначе скрываем активную категорию
-                console.log('scenario 3');
-                zoomOut($('.zoom'));
-            }
-        } else if (category_active.length && !up) { // если активна категория и скролл вниз
-            console.log('scenario 4');
+            var category_active = $('.opened');
+            var gallery_active = category_active.find('.gallery');
             $('.menu-line').css({'width': '480px'});
-            console.log("480");
             gallery_active.show(); // показываем галерею
             var photos_wrap = gallery_active.find(".two-photos-wrap, .category-title, .gallery-description");
             if (!get_class(photos_wrap.first()))
@@ -119,24 +136,51 @@ $(function () {
             photos_wrap.each(function () {
                 if (!get_class(this))
                     $(this).switchClass("", $(this).attr('class') + '-animate', 3000, "easeInOutQuad");
-            })
+            });
 
-        } else if (new_index < allSections.length && new_index >= 0) { // анимация секций
-            console.log('gonna show dat effect');
-            var element = allSections.eq(new_index); // текущая секция(слайд)
-            effect(element, up);
-        } else {
-            $(window).on('scroll', scrollHandler);
+            $(window).on('scroll', slide2HideGallery);
         }
+
     }
 
+    function slide2HideGallery() {
+        console.log('slide 2 present gallery handler');
+        var currentScrollPosition = $(window).scrollTop();
 
-    $(window).on('scroll', scrollHandler);
+        // if we scroll up
+        if (currentScrollPosition < window.lastScrollPosition) {
+            $(window).off('scroll', slide2HideGallery);
+
+            var category_active = $('.opened');
+            var gallery_active = category_active.find('.gallery');
+            if (gallery_active.is(':visible')) { // если активная галерея
+                $('.menu-line').css({'width': '100%'});
+                category_active.find('.category').animate({'opacity': 1}, 3000);
+                gallery_active.find(".two-photos-wrap, .category-title, .gallery-description").each(function () {
+                    $(this).switchClass(get_class(this), "", 3000, "easeInOutQuad", function () {
+                        gallery_active.hide();
+                    });
+                });
+            }
+
+            setTimeout(function() {
+                $(window).on('scroll', slide2ZoomOut);
+                $(window).on('scroll', slide2PresentGallery);
+            }, 3000);
+        }
+
+    }
+
+    $(window).on('scroll', slide1toSlide2ScrollHandler);
 
 
     // SLIDE 2 -> 3
-    $('.nav li').on('click', function (e) {
+
+    function menuClickHandler(e) {
         e.preventDefault();
+        $(window).off('scroll', slide2ToSlide1ScrollHandler);
+        $(window).on('scroll', slide2ZoomOut);
+        $(window).on('scroll', slide2PresentGallery);
 
         loadRandomPictures($(this).attr('class').split(' ')[0], $(this).find('.gallery'));
 
@@ -150,6 +194,7 @@ $(function () {
         var afterBlowup = $.Deferred();
         afterBlowup.then(function() {
             $(this).find('.description').fadeIn();
+            $('.nav li').off('click', menuClickHandler);
         });
         fullsizeMenuItem($(this), afterBlowup);
 
@@ -171,27 +216,22 @@ $(function () {
         }, 3000, function() {
             displayDownArrowHelper();
         });
+    }
 
-    });
+    $('.nav li').on('click', menuClickHandler);
 
-    var categoryHeight = $(".title-nav-wrap").height();
-    var categoryWidth = $(".title-nav-wrap").width();
     var oldCategoryPadding = $(".category").css("padding");
 
-    // SLIDE 3 -> 2
-    // $('.nav').on('click', '.zoom', function (e) {
-    // 	console.log('zoom')
-    // 	e.preventDefault();
-    // 	zoomOut(this);
-    // });
-
-
     function zoomOut(obj) { // скрытие активной категории
+        $(window).off('scroll', slide2ZoomOut);
+        $(window).off('scroll', slide2PresentGallery);
         $(obj).find('.description').fadeOut();
 
         var def = $.Deferred();
         def.then(function() {
             $(obj).removeClass('opened');
+            $(window).on('scroll', slide2ToSlide1ScrollHandler);
+            $('.nav li').on('click', menuClickHandler);
         });
         downsizeMenuItem($(obj), def);
 
@@ -206,6 +246,10 @@ $(function () {
             duration: 3000, queue: false
         });
     }
+
+    $('.gallery a').on('click', function(e) {
+        e.preventDefault();
+    });
 });
 
 
@@ -220,6 +264,9 @@ function get_class(obj, str) {
     });
     return class_name;
 }
+
+/* DIFFERENT POSSIBLE SCROLLS */
+
 
 /* CHECKED FUNCTIONS */
 function resizeAllSectionsToWindowHeight() {
@@ -246,7 +293,7 @@ function loadRandomPictures(folderName, placeholderElement) {
     });
 }
 
-function displayDownArrowHelper()  {
+function displayDownArrowHelper(element)  {
     // i was not sure whether modifying HTML structure of page will affect its behaviour, that's why
     // i have to put this code here
     var html = '<div id="arrow_helper">'
@@ -254,7 +301,7 @@ function displayDownArrowHelper()  {
             + '<img src="/img/down.png" />'
             + '</div>';
     var helper = $(html);
-    $('section.active').append(helper);
+    $(element).append(helper);
     $(helper).animate({
         'bottom' : '50px'
     });
@@ -404,7 +451,7 @@ function fullsizeMenuItem(item, deferred) {
 function downsizeMenuItem(item, deferred) {
     var animationLength = 2000;
 
-    var currentElement = $(this);
+    var currentElement = $(item);
 
     var imageOriginalWidth = 1400;
     var imageOriginalHeight = 800;
@@ -443,69 +490,4 @@ function downsizeMenuItem(item, deferred) {
         }
     }
     currentElement.animate(changes, animationLength, deferred.resolve);
-}
-
-
-/**
- Image resizing functionality, 3rd party
- */
-function OnImageLoad(evt) {
-    var img = evt.currentTarget;
-
-    // what's the size of this image and it's parent
-    var w = $(img).width();
-    var h = $(img).height();
-    var tw = $(img).parent().width();
-    var th = $(img).parent().height();
-
-    // compute the new size and offsets
-    var result = ScaleImage(w, h, tw, th, false);
-
-    // adjust the image coordinates and size
-    img.width = result.width;
-    img.height = result.height;
-
-    $(img).css("left", result.targetleft);
-    $(img).css("top", result.targettop);
-}
-
-function ScaleImage(srcwidth, srcheight, targetwidth, targetheight, fLetterBox) {
-
-    var result = {width: 0, height: 0, fScaleToTargetWidth: true};
-
-    if ((srcwidth <= 0) || (srcheight <= 0) || (targetwidth <= 0) || (targetheight <= 0)) {
-        return result;
-    }
-
-    // scale to the target width
-    var scaleX1 = targetwidth;
-    var scaleY1 = (srcheight * targetwidth) / srcwidth;
-
-    // scale to the target height
-    var scaleX2 = (srcwidth * targetheight) / srcheight;
-    var scaleY2 = targetheight;
-
-    // now figure out which one we should use
-    var fScaleOnWidth = (scaleX2 > targetwidth);
-    if (fScaleOnWidth) {
-        fScaleOnWidth = fLetterBox;
-    }
-    else {
-        fScaleOnWidth = !fLetterBox;
-    }
-
-    if (fScaleOnWidth) {
-        result.width = Math.floor(scaleX1);
-        result.height = Math.floor(scaleY1);
-        result.fScaleToTargetWidth = true;
-    }
-    else {
-        result.width = Math.floor(scaleX2);
-        result.height = Math.floor(scaleY2);
-        result.fScaleToTargetWidth = false;
-    }
-    result.targetleft = Math.floor((targetwidth - result.width) / 2);
-    result.targettop = Math.floor((targetheight - result.height) / 2);
-
-    return result;
 }
