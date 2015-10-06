@@ -27,7 +27,7 @@
 			<div class="title">
 				<h1>Виртуальная<br> выставка<br></span></h1>
 				<h1 class="symbol">"Символы Крыма"</h1>
-                <audio src="sfx/waves.mp3" autoplay loop class="hidden"></audio>
+                <audio id="waveplayer" src="sfx/waves.mp3" autoplay loop class="hidden"></audio>
 			</div>
 		</div>
 	</section>
@@ -39,7 +39,7 @@
 		</div>
 		<div class="info-wrap">
 			<ul class="nav">
-				<li class="history">
+				<li class="history loadable">
 					<div class="title-nav-wrap">
 						<div class="category">
 							<h2>История Крыма</h2>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="gallery" id="nature">
-						<h3 class="category-title">О природе Крыма</h3>
+						<h3 class="category-title">История Крыма</h3>
 						<div class="two-photos-wrap top-left-photos">
 							<div class="photo-wrap">
                                 <a href="img/menu-crimeans-bg.jpg" data-lightbox="history">
@@ -118,52 +118,52 @@
 						</div>
 					</div>
 					<div class="gallery">
-						<h3 class="category-title">О природе Крыма</h3>
+						<h3 class="category-title">Крымчане</h3>
 						<div class="two-photos-wrap top-left-photos">
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/armyane.png" alt="">
 								</a>
 							</div>
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/belorusi.png" alt="">
 								</a>
 							</div>
 						</div>
 						<div class="two-photos-wrap top-right-photos">
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/greki.png" alt="">
 								</a>
 							</div>
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/krymtatary.png" alt="">
 								</a>
 							</div>
 						</div>
 						<div class="two-photos-wrap bottom-left-photos">
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/karaims.png" alt="">
 								</a>
 							</div>
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/krymchaki.png" alt="">
 								</a>
 							</div>
 						</div>
 						<div class="two-photos-wrap bottom-right-photos">
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/russkie.png" alt="">
 								</a>
 							</div>
 							<div class="photo-wrap">
-								<a href="img/menu-crimeans-bg.jpg" data-lightbox="crimeans">
-									<img src="img/menu-crimeans-bg.jpg" alt="">
+								<a onclick="presentNation('');" class="clickable">
+									<img src="img/ukraintsy.png" alt="">
 								</a>
 							</div>
 						</div>
@@ -171,7 +171,7 @@
                             закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
 					</div>
 				</li>
-				<li class="heroes">
+				<li class="heroes loadable">
 					<div class="title-nav-wrap">
 						<div class="category">
 							<h2>Героика Крыма</h2>
@@ -187,7 +187,7 @@
 						</div>
 					</div>
 					<div class="gallery">
-						<h3 class="category-title">О природе Крыма</h3>
+						<h3 class="category-title">Героика Крыма</h3>
 						<div class="two-photos-wrap top-left-photos">
 							<div class="photo-wrap">
 								<a href="img/menu-crimeans-bg.jpg" data-lightbox="heroes">
@@ -239,7 +239,7 @@
 						<p class="gallery-description">“... Ландшафты Крыма уникальны. Но я больше всего люблю закаты в горах. Воздух прозрачный и светится красным или желтым.</p>
 					</div>
 				</li>
-				<li class="nature">
+				<li class="nature loadable">
 					<div class="title-nav-wrap">
 						<div class="category">
 							<h2>Природа Крыма</h2>

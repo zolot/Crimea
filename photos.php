@@ -6,6 +6,15 @@ $photos_list = [];
 foreach (glob(__DIR__.'/photos/'.$folder.'/*.small.jpg') as $file) {
     $photos_list[] = str_replace(__DIR__, '', $file);
 }
+foreach (glob(__DIR__.'/photos/'.$folder.'/*.small.JPG') as $file) {
+    $photos_list[] = str_replace(__DIR__, '', $file);
+}
+foreach (glob(__DIR__.'/photos/'.$folder.'/*.small.jpeg') as $file) {
+    $photos_list[] = str_replace(__DIR__, '', $file);
+}
+foreach (glob(__DIR__.'/photos/'.$folder.'/*.small.JPEG') as $file) {
+    $photos_list[] = str_replace(__DIR__, '', $file);
+}
 
 $random_count = 8;
 if (count($photos_list) <= $random_count) {

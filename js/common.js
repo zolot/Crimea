@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    document.getElementById('waveplayer').volume = 0.1;
+
     // setup appropriate section sizing
     resizeAllSectionsToWindowHeight();
     resizePrimaryMenu();
@@ -182,7 +184,10 @@ $(function () {
         $(window).on('scroll', slide2ZoomOut);
         $(window).on('scroll', slide2PresentGallery);
 
-        loadRandomPictures($(this).attr('class').split(' ')[0], $(this).find('.gallery'));
+
+        if ($(this).hasClass('loadable')) {
+            loadRandomPictures($(this).attr('class').split(' ')[0], $(this).find('.gallery'));
+        }
 
         if ($(this).hasClass('opened')) {
             zoomOut(this);
@@ -230,6 +235,7 @@ $(function () {
         var def = $.Deferred();
         def.then(function() {
             $(obj).removeClass('opened');
+            $(obj).css("z-index", "1");
             $(window).on('scroll', slide2ToSlide1ScrollHandler);
             $('.nav li').on('click', menuClickHandler);
         });
